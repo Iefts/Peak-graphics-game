@@ -98,7 +98,7 @@ public class PeakCharacterAssembler : MonoBehaviour
         var col = go.GetComponent<Collider>();
         if (col != null) col.isTrigger = true;
 
-        var mat = new Material(Shader.Find("Standard") ?? Shader.Find("Diffuse"));
+        var mat = new Material(Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard"));
         mat.color = color;
         go.GetComponent<Renderer>().sharedMaterial = mat;
     }

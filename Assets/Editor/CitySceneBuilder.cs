@@ -325,7 +325,7 @@ public static class CitySceneBuilder
             _                => null
         };
 
-        var mat = new Material(Shader.Find("Standard") ?? Shader.Find("Diffuse"));
+        var mat = new Material(Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard"));
 
         if (texFile != null)
         {
