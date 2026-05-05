@@ -36,7 +36,7 @@ public static class ShaderFixer
             if (needsUpgrade)
             {
                 Texture mainTex = mat.mainTexture;
-                Color   col     = mat.color;
+                Color   col     = mat.HasProperty("_Color")    ? mat.color       : Color.white;
 
                 mat.shader      = urpLit;
                 mat.mainTexture = mainTex;
