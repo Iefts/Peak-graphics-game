@@ -24,7 +24,8 @@ public static class PolytopeMatFixer
 
             if (mat.HasProperty("_BaseColor"))
             {
-                mat.SetColor("_BaseColor", Color.white);
+                // Warm linen/earth tone — reads as medieval peasant clothing
+                mat.SetColor("_BaseColor", new Color(0.72f, 0.58f, 0.40f, 1f));
                 EditorUtility.SetDirty(mat);
                 count++;
             }
