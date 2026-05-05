@@ -25,6 +25,7 @@ public static class ShaderFixer
             string path = AssetDatabase.GUIDToAssetPath(guid);
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat == null) continue;
+            if (mat.isVariant) continue; // variants inherit shader from parent — skip
 
             // Pink in URP = shader exists but isn't a URP shader.
             // Replace anything that isn't already a URP or Shader Graph shader.
