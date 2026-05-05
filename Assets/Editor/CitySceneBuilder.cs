@@ -45,9 +45,8 @@ public static class CitySceneBuilder
     // ── Ground ────────────────────────────────────────────────────────────
     static void CreateGround()
     {
-        var g = Box("Ground", new Vector3(0, -0.05f, L / 2f),
-                    new Vector3(W + 20f, 0.1f, L + 30f), DirtGround);
-        GameObjectUtility.SetStaticEditorFlags(g, StaticEditorFlags.BatchingStatic);
+        Box("Ground", new Vector3(0, -0.05f, L / 2f),
+            new Vector3(W + 20f, 0.1f, L + 30f), DirtGround);
     }
 
     // ── City walls ────────────────────────────────────────────────────────
@@ -244,9 +243,7 @@ public static class CitySceneBuilder
 
     static GameObject WallPart(string name, GameObject parent, Vector3 pos, Vector3 scale, Color color)
     {
-        var g = Box(name, pos, scale, color, parent.transform);
-        GameObjectUtility.SetStaticEditorFlags(g, StaticEditorFlags.BatchingStatic);
-        return g;
+        return Box(name, pos, scale, color, parent.transform);
     }
 
     static void Tower(string name, GameObject parent, Vector3 basePos)
