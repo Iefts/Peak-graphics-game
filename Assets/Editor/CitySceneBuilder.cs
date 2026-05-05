@@ -307,17 +307,40 @@ public static class CitySceneBuilder
         return g;
     }
 
-    // Loads a material from the Medieval Village Building Pack.
-    // Falls back to a plain-color material if the file isn't found.
+    // Creates a Standard shader material using the pack's basecolor texture.
+    // Bypasses the pack's custom shaders (which are pipeline-incompatible).
+    // Falls back to a plain-color material if the texture isn't found.
     static Material PackMat(string name, Color fallback)
     {
-        var mat = AssetDatabase.LoadAssetAtPath<Material>(
-            $"Assets/Medieval Village Building Pack/Materials/{name}.mat");
-        if (mat != null) return mat;
+        string texFile = name switch
+        {
+            "StoneWallTile"  => "Stone_Wall_basecolor.png",
+            "Cobblestones"   => "Cobblestones_basecolor.png",
+            "LooseRocks"     => "LooseRocks_basecolor.png",
+            "Plaster"        => "Plaster_Surface_basecolor.png",
+            "BrickWallTile"  => "Brick_Wall_basecolor.png",
+            "StrawRoof"      => "Straw_Roof_basecolor.png",
+            "WoodRoofTile"   => "Roof_Wood_Tile_basecolor.png",
+            "WoodTile"       => "Wood_Tile_basecolor.png",
+            _                => null
+        };
 
-        Debug.LogWarning($"[CitySceneBuilder] Material '{name}' not found — using fallback color.");
-        var m = new Material(Shader.Find("Standard") ?? Shader.Find("Diffuse"));
-        m.color = fallback;
-        return m;
+        var mat = new Material(Shader.Find("Standard") ?? Shader.Find("Diffuse"));
+
+        if (texFile != null)
+        {
+            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(
+                $"Assets/Medieval Village Building Pack/Textures/{texFile}");
+            if (tex != null)
+            {
+                mat.mainTexture = tex;
+                mat.color = Color.white;
+                return mat;
+            }
+        }
+
+        Debug.LogWarning($"[CitySceneBuilder] Texture for '{name}' not found — using fallback color.");
+        mat.color = fallback;
+        return mat;
     }
 }
