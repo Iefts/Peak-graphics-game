@@ -26,11 +26,14 @@ public static class ShaderFixer
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat == null) continue;
 
-            bool broken = mat.shader == null
-                       || mat.shader.name == "Hidden/InternalErrorShader"
-                       || !mat.shader.isSupported;
+            // Pink in URP = shader exists but isn't a URP shader.
+            // Replace anything that isn't already a URP or Shader Graph shader.
+            bool needsUpgrade = mat.shader == null
+                             || mat.shader.name == "Hidden/InternalErrorShader"
+                             || (!mat.shader.name.StartsWith("Universal Render Pipeline")
+                              && !mat.shader.name.StartsWith("Shader Graphs/"));
 
-            if (broken)
+            if (needsUpgrade)
             {
                 Texture mainTex = mat.mainTexture;
                 Color   col     = mat.color;
