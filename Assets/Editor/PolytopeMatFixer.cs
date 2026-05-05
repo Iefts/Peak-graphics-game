@@ -14,7 +14,7 @@ public static class PolytopeMatFixer
         string[] guids = AssetDatabase.FindAssets("t:Material",
             new[] { "Assets/Polytope Studio" });
 
-        int fixed = 0;
+        int count = 0;
         foreach (var guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
@@ -26,11 +26,11 @@ public static class PolytopeMatFixer
             {
                 mat.SetColor("_BaseColor", Color.white);
                 EditorUtility.SetDirty(mat);
-                fixed++;
+                count++;
             }
         }
 
         AssetDatabase.SaveAssets();
-        Debug.Log($"[PolytopeMatFixer] Reset _BaseColor to white on {fixed} materials.");
+        Debug.Log($"[PolytopeMatFixer] Reset _BaseColor to white on {count} materials.");
     }
 }
